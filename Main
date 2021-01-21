@@ -1,0 +1,75 @@
+package regula_u4;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+/**
+ * @author Dominguez Cazales Jennifer
+ */
+public class Regula_U4 {
+
+public static void main(String[] args) throws IOException {
+		boolean continuar = true;
+		int opcion, elemento;	
+
+		Procesos obj = new Procesos();
+		Scanner leer = new Scanner (System.in);	
+		while(continuar) {
+			System.out.println("");
+			System.out.println("Menu de listas enlazadas");
+			System.out.println("1.- Insertar");
+			System.out.println("2.- Mostrar Pre-orden");
+			System.out.println("3.- Mostrar In-orden");
+			System.out.println("4.- Mostrar Post-orden");
+			System.out.println("5.- Buscar elemento");
+			System.out.println("6.- Altura");
+			System.out.println("7.- Cantidad de nodos");
+			System.out.println("8.- Salir");
+			opcion = leer.nextInt();
+			
+			switch (opcion) {
+			case 1:
+				System.out.println("Numeros insertados");
+                               obj.Inser();
+				break;
+				
+			case 2:
+				obj.preorden();
+				break;
+				
+			case 3:
+				obj.inorden();
+				break;
+				
+			case 4:
+				obj.posorden();
+				break;
+				
+			case 5:
+				System.out.println("¿Qué número desea buscar?");
+				elemento = leer.nextInt();
+				obj.Buscar(elemento);
+				break;
+				
+			case 6:
+				obj.retornaAltura();
+				break;
+			
+			case 7:
+				obj.cantidad();
+				break;
+			
+			case 8:
+				continuar = false;
+				break;
+				
+			default:
+				break;
+			}
+		}
+}
+}
+
