@@ -1,0 +1,154 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package regula_u4;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Procesos {
+
+	Buscar buscar = new Buscar();
+	
+	Nodo nodoPadre = null;
+	Nodo nodoRaiz = null;
+	int cantidadNodos = 0;
+	int altura, nivel = 1;
+	public void Inser() throws IOException{
+        Ingresar("C:\\numeros.txt"); 
+        }
+        public void Ingresar(String archivo) throws FileNotFoundException, IOException {
+        Nodo nodoActual;
+        String cadena;
+            //El txt fue separado por comas 
+            //Use estos numeros
+            //6,3,2,4,1,12,7,10,8,9          
+
+        FileReader f = new FileReader(archivo);
+        BufferedReader b = new BufferedReader(f);
+        cadena = b.readLine();
+        String [] numeros =(cadena.split(","));
+        int []num=new int[numeros.length]; 
+        for (int i = 0; i < numeros.length; i++) {
+            num[i]=Integer.parseInt(numeros[i]);
+        }
+            for (int i = 0; i < num.length; i++) {
+                nodoActual = new Nodo(num[i]);
+		Insertar(nodoActual);
+            }
+        b.close();
+    }
+        
+	public void Insertar(Nodo nodoActual) {
+		
+		if(nodoPadre == null) {
+			
+			nodoPadre = nodoActual;
+			nodoRaiz = nodoActual;
+			
+			cantidadNodos++;
+		}else {
+			
+			if(nodoActual.elemento < nodoPadre.elemento) {
+					
+				if(nodoPadre.izquierda == null) {
+					nodoPadre.izquierda = nodoActual;
+					nodoPadre = nodoRaiz;							
+					
+					cantidadNodos++;
+				}else {
+					nodoPadre = nodoPadre.izquierda;
+					Insertar(nodoActual);
+				}
+			
+			}else {
+				
+				if(nodoPadre.derecha == null) {
+					nodoPadre.derecha = nodoActual;
+					nodoPadre = nodoRaiz;	
+					
+					cantidadNodos++;
+				}else {
+					nodoPadre = nodoPadre.derecha;
+					Insertar(nodoActual);
+				}
+			}
+		}
+	}
+	
+	public void preorden() {
+		preorden(nodoRaiz);
+	}
+
+	private void preorden(Nodo nodoRaiz2) {
+		
+		if (nodoRaiz2 != null) {
+			System.out.print(nodoRaiz2.elemento+" ");
+			preorden(nodoRaiz2.izquierda);
+			preorden(nodoRaiz2.derecha);
+		}
+	}
+	
+	public void inorden() {
+		inorden(nodoRaiz);
+	}
+	
+	
+	private void inorden(Nodo nodoRaiz2) {
+		
+		if(nodoRaiz2 != null) {
+			inorden(nodoRaiz2.izquierda);
+			System.out.print(nodoRaiz2.elemento+" ");
+			inorden(nodoRaiz2.derecha);
+		}	
+	}
+
+	public void posorden() {
+		posorden(nodoRaiz);
+	}
+
+	private void posorden(Nodo nodoRaiz2) {
+		
+		if (nodoRaiz2 != null) {
+			posorden(nodoRaiz2.izquierda);
+			posorden(nodoRaiz2.derecha);
+			System.out.print(nodoRaiz2.elemento+" ");
+		}
+	}
+
+	public void Buscar(int elemento) {
+		
+		Nodo auxiliar = nodoPadre;
+		int nivel = 1;
+		
+		buscar.metodoBuscar(elemento, auxiliar, nivel);
+	}
+
+	public void cantidad() {
+		
+		System.out.print("La cantidad de nodos es de: "+cantidadNodos);
+		
+	}	
+
+	public void retornaAltura() {
+		altura = 0;
+		retornaAltura(nodoRaiz, nivel);
+		System.out.println("La altura es: " +altura);
+	}
+	
+	public void retornaAltura(Nodo reco, int nivel) {
+		
+		if(reco!= null) {
+			retornaAltura(reco.izquierda, nivel+1);
+			
+			if(nivel > altura) 
+				altura = nivel;
+			
+			retornaAltura (reco.derecha, nivel+1);
+		}
+	}
+}
